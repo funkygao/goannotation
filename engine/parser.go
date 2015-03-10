@@ -8,13 +8,13 @@ import (
 	"strings"
 )
 
-func ParseFile(fn string) (pkgName string) {
+func ParseFile(fn string) {
 	f, err := parser.ParseFile(token.NewFileSet(), fn, nil, parser.ParseComments)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	pkgName = f.Name.Name
+	pkgName := f.Name.Name
 	for _, decl := range f.Decls {
 		genDecl, ok := decl.(*ast.GenDecl)
 		if !ok || genDecl.Doc == nil {
@@ -23,17 +23,17 @@ func ParseFile(fn string) (pkgName string) {
 		}
 
 		for _, comment := range genDecl.Doc.List {
-			for _, plugin := range registeredPlugins {
-				if strings.Contains(comment.Text, plugin.AnnotationTag()) {
+			for _, plugin := range registeredAnnotations {
+				if strings.Contains(comment.Text, plugin.Tag()) {
 					// found the annotation
 					log.Println("found:", plugin)
 
 					for _, spec := range genDecl.Specs {
-						switch plugin.AnnotationType() {
-						case TAG_TYPE:
-							parseTypeAnnotation(spec)
-						case TAG_FUNC:
-							parseFuncAnnotation(spec)
+						switch plugin.Type() {
+						case ANNOTATION_TYPE:
+							parseTypeAnnotation(pkgName, spec)
+						case ANNOTATION_FUNC:
+							parseFuncAnnotation(pkgName, spec)
 						}
 					}
 				}
@@ -47,10 +47,10 @@ func ParseFile(fn string) (pkgName string) {
 
 }
 
-func parseTypeAnnotation(spec ast.Spec) {
+func parseTypeAnnotation(pkgName string, spec ast.Spec) {
 
 }
 
-func parseFuncAnnotation(spec ast.Spec) {
+func parseFuncAnnotation(pkgName string, spec ast.Spec) {
 
 }

@@ -8,12 +8,12 @@ import (
 type Joiner struct {
 }
 
-func (this *Joiner) AnnotationTag() string {
+func (this *Joiner) Tag() string {
 	return "@joiner"
 }
 
-func (this *Joiner) AnnotationType() engine.AnnotationType {
-	return engine.TAG_TYPE
+func (this *Joiner) Type() engine.AnnotationType {
+	return engine.ANNOTATION_TYPE
 }
 
 func init() {
