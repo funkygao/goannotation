@@ -8,7 +8,9 @@ import (
 )
 
 func main() {
-	log.SetFlags(0)
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	engine.Debug = false
+
 	for _, fn := range os.Args[1:] {
 		engine.ParseFile(fn)
 	}

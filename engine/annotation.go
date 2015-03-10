@@ -2,18 +2,23 @@ package engine
 
 import (
 	"fmt"
+	"go/ast"
 	"strings"
 )
 
 type AnnotationType uint8
 
 const (
-	ANNOTATION_FUNC AnnotationType = iota + 1
-	ANNOTATION_TYPE
+	ANNOTATION_FUNC   AnnotationType = iota + 1 // applied to func declaration
+	ANNOTATION_STRUCT                           // applied to struct declaration
+
+	ANNOTATION_PREFIX = "@"
 )
 
 var (
 	registeredAnnotations []Annotation = make([]Annotation, 0)
+
+	Debug = true
 )
 
 type Annotation interface {
@@ -21,9 +26,19 @@ type Annotation interface {
 	Type() AnnotationType
 }
 
-func RegisterPlugin(a Annotation) {
-	var tag = a.Tag()
-	if !strings.HasPrefix(tag, "@") {
+type StructAnnotation interface {
+	Annotation
+	Execute(pkgName string, typeName string)
+}
+
+type FuncAnnotation interface {
+	Annotation
+	Execute(pkgName string, funcName string, decl *ast.FuncDecl)
+}
+
+func RegisterPlugin(an Annotation) {
+	var tag = an.Tag()
+	if !strings.HasPrefix(tag, ANNOTATION_PREFIX) {
 		panic(fmt.Sprintf("invalid plugin with tag: %s", tag))
 	}
 
@@ -34,5 +49,5 @@ func RegisterPlugin(a Annotation) {
 		}
 	}
 
-	registeredAnnotations = append(registeredAnnotations, a)
+	registeredAnnotations = append(registeredAnnotations, an)
 }

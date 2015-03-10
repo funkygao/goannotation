@@ -2,9 +2,9 @@ package annotations
 
 import (
 	"github.com/funkygao/goannotation/engine"
+	"log"
 )
 
-// A sample annotation implementation.
 // @joiner
 type Joiner struct {
 }
@@ -13,8 +13,14 @@ func (this *Joiner) Tag() string {
 	return "@joiner"
 }
 
+// @splitter
 func (this *Joiner) Type() engine.AnnotationType {
-	return engine.ANNOTATION_TYPE
+	return engine.ANNOTATION_STRUCT
+}
+
+func (this *Joiner) Execute(pkgName string, typeName string) {
+	// we can auto generate src code here
+	log.Println(pkgName, typeName)
 }
 
 func init() {
