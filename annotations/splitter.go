@@ -6,6 +6,7 @@ import (
 	"log"
 )
 
+// Splitter is a sample annotation implementation applied on func.
 type Splitter struct {
 }
 

@@ -5,6 +5,7 @@ import (
 	"log"
 )
 
+// Jointer is a sample annotation implementation applied on struct.
 type Joiner struct {
 }
 
