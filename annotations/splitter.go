@@ -13,14 +13,9 @@ func (this *Splitter) Tag() string {
 	return "@splitter"
 }
 
-func (this *Splitter) Type() engine.AnnotationType {
-	return engine.ANNOTATION_STRUCT
-}
-
 func (this *Splitter) Execute(pkgName string, funcName string, decl *ast.FuncDecl) {
 	// we can auto generate src code here
-	log.Println(pkgName, funcName)
-	log.Printf("%#v\n", *decl)
+	log.Printf("pkg:%s func:%s decl:%#v\n", pkgName, funcName, *decl)
 }
 
 func init() {

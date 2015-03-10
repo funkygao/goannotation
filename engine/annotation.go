@@ -6,12 +6,7 @@ import (
 	"strings"
 )
 
-type AnnotationType uint8
-
 const (
-	ANNOTATION_FUNC   AnnotationType = iota + 1 // applied to func declaration
-	ANNOTATION_STRUCT                           // applied to struct declaration
-
 	ANNOTATION_PREFIX = "@"
 )
 
@@ -23,7 +18,6 @@ var (
 
 type Annotation interface {
 	Tag() string
-	Type() AnnotationType
 }
 
 type StructAnnotation interface {

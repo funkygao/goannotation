@@ -1,7 +1,6 @@
 package engine
 
 import (
-	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -38,7 +37,8 @@ func parseStructAnnotations(pkgName string, genDecl *ast.GenDecl) {
 		}
 
 		for _, annotation := range registeredAnnotations {
-			if annotation.Type() != ANNOTATION_STRUCT {
+			structAnnotation, ok := annotation.(StructAnnotation)
+			if !ok {
 				continue
 			}
 
@@ -61,11 +61,6 @@ func parseStructAnnotations(pkgName string, genDecl *ast.GenDecl) {
 				}
 			}
 
-			structAnnotation, ok := annotation.(StructAnnotation)
-			if !ok {
-				panic(fmt.Sprintf("Execute() not found in annotation tag: %s",
-					annotation.Tag()))
-			}
 			structAnnotation.Execute(pkgName, typeName)
 		}
 	}
@@ -78,7 +73,8 @@ func parseFuncAnnotations(pkgName string, funcDecl *ast.FuncDecl) {
 
 	for _, comment := range funcDecl.Doc.List {
 		for _, annotation := range registeredAnnotations {
-			if annotation.Type() != ANNOTATION_FUNC {
+			funcAnnotation, ok := annotation.(FuncAnnotation)
+			if !ok {
 				continue
 			}
 
@@ -89,12 +85,6 @@ func parseFuncAnnotations(pkgName string, funcDecl *ast.FuncDecl) {
 			// found the annotation
 			if Debug {
 				log.Println("found func annotation tag:", annotation.Tag())
-			}
-
-			funcAnnotation, ok := annotation.(FuncAnnotation)
-			if !ok {
-				panic(fmt.Sprintf("Execute() not found in annotation tag: %s",
-					annotation.Tag()))
 			}
 
 			var funcName string
