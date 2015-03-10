@@ -5,7 +5,6 @@ import (
 	"log"
 )
 
-// @joiner
 type Joiner struct {
 }
 
@@ -13,7 +12,6 @@ func (this *Joiner) Tag() string {
 	return "@joiner"
 }
 
-// @splitter
 func (this *Joiner) Type() engine.AnnotationType {
 	return engine.ANNOTATION_STRUCT
 }
