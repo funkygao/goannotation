@@ -1,9 +1,10 @@
-package plugins
+package annotations
 
 import (
 	"github.com/funkygao/goannotation/engine"
 )
 
+// A sample annotation implementation.
 // @joiner
 type Joiner struct {
 }
