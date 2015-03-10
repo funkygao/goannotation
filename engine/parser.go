@@ -1,7 +1,6 @@
-package main
+package engine
 
 import (
-	"github.com/funkygao/goannotation/engine"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -24,16 +23,16 @@ func ParseFile(fn string) (pkgName string) {
 		}
 
 		for _, comment := range genDecl.Doc.List {
-			for _, plugin := range engine.Plugins {
+			for _, plugin := range registeredPlugins {
 				if strings.Contains(comment.Text, plugin.AnnotationTag()) {
 					// found the annotation
 					log.Println("found:", plugin)
 
 					for _, spec := range genDecl.Specs {
 						switch plugin.AnnotationType() {
-						case engine.TAG_TYPE:
+						case TAG_TYPE:
 							parseTypeAnnotation(spec)
-						case engine.TAG_FUNC:
+						case TAG_FUNC:
 							parseFuncAnnotation(spec)
 						}
 					}

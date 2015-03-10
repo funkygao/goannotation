@@ -8,7 +8,7 @@ const (
 )
 
 var (
-	Plugins []Plugin = make([]Plugin, 0)
+	registeredPlugins []Plugin = make([]Plugin, 0)
 )
 
 type Plugin interface {
@@ -17,5 +17,5 @@ type Plugin interface {
 }
 
 func RegisterPlugin(p Plugin) {
-	Plugins = append(Plugins, p)
+	registeredPlugins = append(registeredPlugins, p)
 }
