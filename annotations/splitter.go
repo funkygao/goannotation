@@ -8,10 +8,15 @@ import (
 
 // Splitter is a sample annotation implementation applied on func.
 type Splitter struct {
+	attrs map[string]string
 }
 
 func (this *Splitter) Tag() string {
 	return "@splitter"
+}
+
+func (this *Splitter) SetAttrs(kv map[string]string) {
+	this.attrs = kv
 }
 
 func (this *Splitter) Execute(pkgName string, funcName string, decl *ast.FuncDecl) {

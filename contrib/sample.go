@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-// @joiner
+// @joiner(a=b,c=d)
 type Joiner struct {
 }
 

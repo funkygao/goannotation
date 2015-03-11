@@ -51,6 +51,8 @@ func parseStructAnnotations(pkgName string, genDecl *ast.GenDecl) {
 				log.Println("found struct annotation tag:", annotation.Tag())
 			}
 
+			parseAnnotationAttrs(comment.Text, annotation)
+
 			var typeName string
 			for _, spec := range genDecl.Specs {
 				if typeSpec, ok := spec.(*ast.TypeSpec); ok {
@@ -87,6 +89,8 @@ func parseFuncAnnotations(pkgName string, funcDecl *ast.FuncDecl) {
 				log.Println("found func annotation tag:", annotation.Tag())
 			}
 
+			parseAnnotationAttrs(comment.Text, annotation)
+
 			var funcName string
 			if funcDecl.Name != nil {
 				funcName = funcDecl.Name.Name
@@ -95,4 +99,31 @@ func parseFuncAnnotations(pkgName string, funcDecl *ast.FuncDecl) {
 			funcAnnotation.Execute(pkgName, funcName, funcDecl)
 		}
 	}
+}
+
+func parseAnnotationAttrs(comment string, an Annotation) {
+	if Debug {
+		log.Printf("%T comment: %s\n", an, comment)
+	}
+
+	kv := make(map[string]string)
+	match := annotationRE.FindStringSubmatch(comment)
+	if match == nil {
+		return
+	}
+
+	for i, name := range annotationRE.SubexpNames() {
+		// ignore the whole regexp match and unnamed groups
+		if i == 0 || name == "" {
+			continue
+		}
+
+		kv[name] = match[i]
+	}
+
+	if Debug {
+		log.Printf("%T attrs: %+v", an, kv)
+	}
+
+	an.SetAttrs(kv)
 }

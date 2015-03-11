@@ -3,6 +3,7 @@ package engine
 import (
 	"fmt"
 	"go/ast"
+	"regexp"
 	"strings"
 )
 
@@ -12,12 +13,13 @@ const (
 
 var (
 	registeredAnnotations []Annotation = make([]Annotation, 0)
-
-	Debug = true
+	annotationRE                       = regexp.MustCompile(``)
+	Debug                              = true
 )
 
 type Annotation interface {
 	Tag() string
+	SetAttrs(kv map[string]string)
 }
 
 type StructAnnotation interface {
