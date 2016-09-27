@@ -3,6 +3,7 @@ package annotations
 import (
 	"fmt"
 	"go/ast"
+	"os"
 	"strings"
 
 	"github.com/funkygao/goannotation/engine"
@@ -28,7 +29,7 @@ func (this *Rest) SetAttrs(kv map[string]string) {
 }
 
 func (this *Rest) Execute(pkgName string, funcName string, decl *ast.FuncDecl) {
-	if !engine.Debug {
+	if os.Getenv("REST_DOC") != "1" {
 		return
 	}
 
