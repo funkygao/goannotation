@@ -28,6 +28,10 @@ func (this *Rest) SetAttrs(kv map[string]string) {
 }
 
 func (this *Rest) Execute(pkgName string, funcName string, decl *ast.FuncDecl) {
+	if !engine.Debug {
+		return
+	}
+
 	if doc, ok := this.attrs["doc"]; ok {
 		fmt.Printf("%s\n", funcName)
 
