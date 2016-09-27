@@ -1,10 +1,13 @@
 package annotations
 
 import (
-	"github.com/funkygao/goannotation/engine"
 	"go/ast"
 	"log"
+
+	"github.com/funkygao/goannotation/engine"
 )
+
+var _ engine.FuncAnnotation = &Splitter{}
 
 // Splitter is a sample annotation implementation applied on func.
 type Splitter struct {

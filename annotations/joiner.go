@@ -1,9 +1,12 @@
 package annotations
 
 import (
-	"github.com/funkygao/goannotation/engine"
 	"log"
+
+	"github.com/funkygao/goannotation/engine"
 )
+
+var _ engine.StructAnnotation = &Joiner{}
 
 // Jointer is a sample annotation implementation applied on struct.
 type Joiner struct {

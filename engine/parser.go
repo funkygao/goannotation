@@ -103,13 +103,19 @@ func parseFuncAnnotations(pkgName string, funcDecl *ast.FuncDecl) {
 
 func parseAnnotationAttrs(comment string, an Annotation) {
 	if Debug {
-		log.Printf("%T comment: %s\n", an, comment)
+		log.Printf("%T comment: %s", an, comment)
 	}
 
 	kv := make(map[string]string)
 	match := annotationRE.FindStringSubmatch(comment)
 	if match == nil {
 		return
+	}
+
+	parts := strings.SplitN(comment, an.Tag(), 2)
+	doc := strings.TrimSpace(parts[1])
+	if len(doc) > 0 {
+		kv["doc"] = doc
 	}
 
 	for i, name := range annotationRE.SubexpNames() {

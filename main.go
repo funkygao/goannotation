@@ -1,10 +1,11 @@
 package main
 
 import (
-	_ "github.com/funkygao/goannotation/annotations"
-	"github.com/funkygao/goannotation/engine"
 	"log"
 	"os"
+
+	_ "github.com/funkygao/goannotation/annotations"
+	"github.com/funkygao/goannotation/engine"
 )
 
 func main() {
